@@ -1,0 +1,367 @@
+011_Ajinkya_Anwade
+
+
+Q.1  postFixEvaluation
+==>>
+import java.util.*;
+public class postfix_evaluation {
+
+	 int stack[], tos,MaxSize;
+	    void createStack(int size)
+	    {
+	        stack=new int [size];
+	        tos=-1;
+	        MaxSize=size;
+	    }
+	    void push(int e)
+	    {      
+	        tos++;
+	        stack[tos]=e;
+	        //or stack[++tos]=e;
+	    }
+	    boolean is_full()
+	    {
+	        if(tos==MaxSize-1)
+	            return true;
+	        else
+	            return false;            
+	    }
+	    int pop()
+	    {
+	        int a=stack[tos];
+	        tos--;
+	        return a;
+	        //or return stack[tos--];
+	    }
+	    boolean is_empty()
+	    {
+	        if(tos==-1)
+	            return true;
+	        else
+	            return false;
+	    }
+	    int peek()       //same as pop but will not change  position of tos;
+	    {
+	        return stack[tos];
+	    }
+	    void print_stack()
+	    {
+	        for (int i=tos;i>-1;i--)
+	            System.out.print(stack[i]);
+	        System.out.println();
+	    }
+
+	public static void main(String[] args) 
+	{
+		// TODO Auto-generated method stub
+		Scanner sc=new Scanner(System.in);
+		String s= sc.nextLine();
+		postfix_evaluation obj=new postfix_evaluation();
+		obj.createStack(s.length());
+		for(int i=0;i<s.length();i++) {
+			char ch=s.charAt(i);
+			if(Character.isDigit(ch)) {
+				obj.push(Character.getNumericValue(ch));		
+			}
+			else {
+				int num1=obj.pop();
+				int num2=obj.pop();
+				switch(ch) {
+				
+				
+				case '+':
+					obj.push(num2+num1);
+					break;
+					
+				case '-':
+					obj.push(num2-num1);
+					break;
+					
+				case '/':
+					obj.push(num2/num1);
+					break;
+					
+					
+				case '*':
+					obj.push(num2*num1);
+					break;
+					
+				default:
+					System.out.println("Wrong choice");
+				}
+				
+				
+			
+			}
+			
+		
+}
+		System.out.println(obj.peek());
+		
+		}
+		
+
+	}
+
+============================================================================================
+Q.2  infix_to_prefix
+==>>
+import java.util.Scanner;
+
+public class infix_to_prefix {
+	char stack[];
+	int tos,MaxSize;
+	void createstack(int size) {
+		stack =new char[size];
+		MaxSize=size;
+		tos=-1;
+		
+	}
+	void push(char e) {
+		tos++;
+		stack [tos]=e;
+	}
+	boolean is_full() {
+		if(tos==MaxSize-1)
+			return true;
+		else
+			return false;
+	}
+	char pop() {
+		char temp =stack[tos];
+		tos--;
+		return temp;
+
+	}
+	char peek() {
+		char temp =stack [tos];
+		return temp;
+
+	}
+	boolean is_empty() {
+		if(tos==-1)
+			return true;
+		else
+			return false;
+	}
+    boolean is_operator(char c) {
+        return c == '+' || c == '-' || c == '*' || c == '/';
+    }
+
+    int get_precedence(char operator) {
+        switch (operator) {
+            case '+':
+            case '-':
+                return 1;
+            case '*':
+            case '/':
+                return 2;
+            default:
+                return 0;
+        }
+    }
+    String INFIX_TO_PREFIX(String infix) {
+    	StringBuilder prefix= new StringBuilder();
+    	
+    	for (int i = infix.length() - 1; i >= 0; i--) {
+            char c = infix.charAt(i);
+            if (c == ')') {
+                push(c);
+            } else if (c == '(') {
+                while (!is_empty() && peek() != ')') {
+                    prefix.insert(0, pop());
+                }
+                pop(); // Pop ')'
+            } else if (Character.isLetterOrDigit(c)) {
+                prefix.insert(0, c);
+            } else if (is_operator(c)) {
+                while (!is_empty() && get_precedence(c) < get_precedence(peek())) {
+                    prefix.insert(0, pop());
+                }
+                push(c);
+            }
+        }
+
+    	 while (!is_empty()) {
+             prefix.insert(0, pop());
+         }
+
+
+        return prefix.toString();
+    	
+    }
+    public static void main(String args[]) {
+    	Scanner sc= new Scanner(System.in);
+    	String s=sc.nextLine();
+    	infix_to_prefix OBJ= new infix_to_prefix();
+    	OBJ.createstack(s.length());
+    	System.out.println("Prefix is "+OBJ.INFIX_TO_PREFIX(s));
+    }
+    
+
+}
+============================================================================================
+Q.3  Reverse_stack
+==>>
+import java.util.*;
+
+public class Reverse_Stack 
+{
+    int stack[],tos,MaxSize;
+    void createStack(int size)
+    {
+        stack=new int [size];
+        tos=-1;
+        MaxSize=size;
+    }
+    void push(int e)
+    {      
+        tos++;
+        stack[tos]=e;
+        //or stack[++tos]=e;
+    }
+    boolean is_full()
+    {
+        if(tos==MaxSize-1)
+            return true;
+        else
+            return false;            
+    }
+    int pop()
+    {
+        int a=stack[tos];
+        tos--;
+        return a;
+        //or return stack[tos--];
+    }
+    boolean is_empty()
+    {
+        if(tos==-1)
+            return true;
+        else
+            return false;
+    }
+    int peek()       //same as pop but will not change  position of tos;
+    {
+        return stack[tos];
+    }
+    void print_stack()
+    {        
+        for (int i=tos;i>-1;i--)
+            System.out.print(stack[i]);
+        System.out.println();
+    }
+   public static void main(String [] args) 
+   {
+	   Scanner sc=new Scanner(System.in);
+	   Reverse_Stack stack=new Reverse_Stack();
+	   Reverse_Stack reversed_stack=new Reverse_Stack();
+	   System.out.println("Enter size of Stack");
+	   int size=sc.nextInt();
+	   stack.createStack(size);
+	   reversed_stack.createStack(size);
+	   while(!stack.is_full())
+	   {
+		   System.out.println("Enter the number ");
+		   int temp=sc.nextInt();
+		  // System.out.println("--");
+		   stack.push(temp);
+		   //
+	   }
+	   stack.print_stack();
+	   System.out.println("------------");
+	   while(!reversed_stack.is_full()) 
+	   {
+		   
+			   int temp=stack.pop();
+			   reversed_stack.push(temp);
+			  
+		   
+	   }
+	   reversed_stack.print_stack();
+	   //System.out.println("--");
+	   
+    }
+
+}
+=====================================================================================================
+Q.4  Sort_Stack
+==>>
+import java.util.*;
+
+public class Sort_Stack {
+    int stack[],tos,MaxSize;
+    void createStack(int size)
+    {
+        stack=new int [size];
+        tos=-1;
+        MaxSize=size;
+    }
+    void push(int e)
+    {      
+        tos++;
+        stack[tos]=e;
+        //or stack[++tos]=e;
+    }
+    boolean is_full()
+    {
+        if(tos==MaxSize-1)
+            return true;
+        else
+            return false;            
+    }
+    int pop()
+    {
+        int a=stack[tos];
+        tos--;
+        return a;
+        //or return stack[tos--];
+    }
+    boolean is_empty()
+    {
+        if(tos==-1)
+            return true;
+        else
+            return false;
+    }
+    int peek()       //same as pop but will not change  position of tos;
+    {
+        return stack[tos];
+    }
+    void print_stack()
+    {
+        for (int i=tos;i>-1;i--)
+            System.out.print(stack[i]);
+        System.out.println();
+    }
+
+    public static void main(String[] args) 
+    {
+    	
+    	Sort_Stack stack=new Sort_Stack();
+    	Sort_Stack Sort_stack=new Sort_Stack();
+    	Scanner sc=new Scanner(System.in);
+    	System.out.println("Enter the size");
+    	int size=sc.nextInt();
+    	stack.createStack(size);
+    	Sort_stack.createStack(size);
+    	while(!stack.is_full()) 
+    	{
+    		System.out.println("Enter the Number");
+    		stack.push(sc.nextInt());
+       	}
+    	stack.print_stack();
+    	while (!stack.is_empty()) {
+            int temp = stack.pop();
+            // Pop elements from the sortedStack and push them back onto the stack
+            while (!Sort_stack.is_empty() && Sort_stack.peek() > temp) {
+                stack.push(Sort_stack.pop());
+            }
+            Sort_stack.push(temp);
+        }
+    	Sort_stack.print_stack();
+    	    	
+    	
+    }
+}
+====================================================================================================
